@@ -23,6 +23,7 @@ SRC_URI += "\
 	file://aufs \
 	file://0001-dts-changes-to-add-uart5.patch \
 	file://0004-uart-no-dma.patch \
+	file://usb-video-config.patch \
 "
 
 SRC_URI[rt-patch1.md5sum] = "77a28c8b20b01f280dcd860e606a6edd"
