@@ -124,7 +124,8 @@ fi
 
 # clean the solo specific recipies, even with -c true to ensure local changes are picked up
 if ! $CLEAN_BUILD; then
-    MACHINE=imx6solo-3dr-1080p bitbake -c clean -f -k sololink shotmanager sololink-python pymavlink mavproxy arducopter gimbal-firmware 2>&1 > /dev/null
+    MACHINE=imx6solo-3dr-1080p bitbake -c clean -f -k sololink shotmanager sololink-python pymavlink mavproxy arducopter gimbal-firmware
+# 2>&1 > /dev/null
     if [ ! $? -eq 0 ]; then
         exit 1
     fi
@@ -153,7 +154,6 @@ if [ $MACHINE_BUILD = 'controller' ] || [ $MACHINE_BUILD = 'both' ]; then
         exit 1
     fi
 fi
-
 
 # Copy the relevant files to a date/time stamped completed directory in the git repo folder for easy access (on git ignore list).
 # Make an MD5sum of each as is required for the Solo and Controller to accept the files.

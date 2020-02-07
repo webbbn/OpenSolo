@@ -371,11 +371,17 @@ int main(int argc, char *argv[])
     openlog("video", LOG_NDELAY, LOG_LOCAL6);
     syslog(LOG_INFO, "main: built " __DATE__ " " __TIME__);
 
+    /* Get the configuration file from the command line if it's specified */
+    const char *conf_file = "/etc/sololink.conf";
+    if (argc == 2) {
+        conf_file = argv[1];
+    }
+
     /* Get the min/max framerate/bitrate values from sololink.conf */
-    INIReader reader("/etc/sololink.conf");
+    INIReader reader(conf_file);
 
     if (reader.ParseError() < 0) {
-        syslog(LOG_ERR, "can't load /etc/sololink.conf");
+        syslog(LOG_ERR, "can't load %s", conf_file);
         return -1;
     }
 
@@ -485,7 +491,7 @@ int main(int argc, char *argv[])
     gst_element_set_state(pipeline, GST_STATE_PLAYING);
 
     /* Open the video fd for the enum_framesizes ioctl call */
-    vid_fd = open("/dev/video0", O_RDWR | O_NONBLOCK, 0);
+    vid_fd = open("/dev/video1", O_RDWR | O_NONBLOCK, 0);
     if (vid_fd < 0) {
         syslog(LOG_ERR, "Unable to open video device for ioctl");
         destroy_pipeline();

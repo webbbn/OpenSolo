@@ -9,7 +9,7 @@
 	url = https://github.com/dronekit/dronekit-python-solo.git
 [submodule "imx6-linux"]
 	path = modules/imx6-linux
-	url = https://github.com/OpenSolo/imx6-linux.git
+	url = https://github.com/webbbn/imx6-linux.git
 [submodule "imx6-uboot"]
 	path = modules/imx6-uboot
 	url = https://github.com/OpenSolo/imx6-uboot.git

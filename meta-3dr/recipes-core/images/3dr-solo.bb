@@ -57,6 +57,7 @@ IMAGE_INSTALL += " \
     persist-logs \
     rsync \
     compat-wireless-all \
+    ffmpeg \
 "
 
 update_config_files() {

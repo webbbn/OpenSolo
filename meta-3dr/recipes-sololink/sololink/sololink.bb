@@ -13,6 +13,7 @@ INHIBIT_PACKAGE_DEBUG_SPLIT = "1"
 
 DEPENDS += "libnl"
 DEPENDS += "gstreamer"
+DEPENDS += "v4l2udp"
 
 RDEPENDS_${PN} += "dronekit"
 RDEPENDS_${PN} += "imx-vpu libfslvpuwrap gst-fsl-plugin"
