@@ -13,7 +13,6 @@ INHIBIT_PACKAGE_DEBUG_SPLIT = "1"
 
 DEPENDS += "libnl"
 DEPENDS += "gstreamer"
-DEPENDS += "v4l2udp"
 
 RDEPENDS_${PN} += "dronekit"
 RDEPENDS_${PN} += "imx-vpu libfslvpuwrap gst-fsl-plugin"
@@ -76,6 +75,8 @@ do_install () {
 
 	install -m 0755 ${S}/flightcode/video/app/app_streamer ${D}${bindir}
 	install -m 0755 ${S}/flightcode/video/vid/vidlaunch ${D}${bindir}
+
+	install -m 0755 ${S}/flightcode/video/v4l2/v4l2_to_udp ${D}${bindir}
 	install -m 0755 ${S}/flightcode/video/hdmi/hdmiout ${D}${bindir}
 	install -m 0755 ${S}/flightcode/video/cleanLibs.sh ${D}${bindir}
 	ln -sf ../../usr/bin/cleanLibs.sh ${D}${sysconfdir}/rcS.d/S61cleanLibs

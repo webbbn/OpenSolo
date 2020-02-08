@@ -11,7 +11,9 @@ SUBDIRS += stm32
 SUBDIRS += telem
 SUBDIRS += telem_ctrl
 SUBDIRS += tlog
+
 SUBDIRS += video/vid
+SUBDIRS += video/v4l2
 SUBDIRS += video/app
 SUBDIRS += video/hdmi
 SUBDIRS += unlock
