@@ -59,16 +59,6 @@
 #include <thread>
 #include <vector>
 
-/*
-#include <boost/asio.hpp>
-
-#if BOOST_VERSION < 106600
-typedef boost::asio::io_service io_context;
-#else
-typedef boost::asio::io_context io_context;
-#endif
-*/
-
 constexpr size_t g_packet_size =1400;
 bool g_done;
 std::thread *g_send_thread = 0;
@@ -98,21 +88,27 @@ void sig_handler(int s){
   }
 }
 
-// Change these to your liking...
-// or modify the program to take them cmd arguments!
-#define DEVICE_NAME "/dev/video0"
-#define FRAME_WIDTH 2560
-#define FRAME_HEIGHT 1280
-
 // This determines the number of "working" buffers we
 // tell the device that it can use. I guess 3 is an OK
 // amount? Maybe try less or more if it runs badly.
 #define MMAP_BUFFERS 5
 
 int main(int argc, char **argv) {
-  //namespace ip=boost::asio::ip;
-  int port = 5600;
-  const char* hostname = "127.0.0.1";
+  const char *device_name;
+  int width;
+  int height;
+  char* hostname;
+  int port;
+
+  if (argc != 6) {
+    fprintf(stderr, "Usage: %s <device> <width> <height> <hostname> <port>\n", argv[0]);
+    return EXIT_FAILURE;
+  }
+  device_name = argv[1];
+  width = atoi(argv[2]);
+  height = atoi(argv[3]);
+  hostname = argv[4];
+  port = atoi(argv[5]);
 
   // Configure the signal handler to close gracefully
   struct sigaction sigIntHandler;
@@ -125,7 +121,7 @@ int main(int argc, char **argv) {
   sockaddr_in servaddr;
   int udpfd = socket(AF_INET,SOCK_DGRAM, 0);
   if (udpfd < 0) {
-    std::cerr << "Error opening the UDP socket.\n";
+    fprintf(stderr, "Error opening the UDP socket.\n");
     exit(EXIT_FAILURE);
   }
     
@@ -134,34 +130,10 @@ int main(int argc, char **argv) {
   servaddr.sin_addr.s_addr = inet_addr(hostname);
   servaddr.sin_port = htons(port);
 
-  // Create the boost ASIO context for sending the UDP packets
-  //io_context io_context;
-
-  // Create the UDP socket
-  //ip::udp::socket sock(io_context, ip::udp::endpoint(ip::address_v4::any(), 1234));
-  //sock.set_option(boost::asio::socket_base::broadcast(true));
-  /*
-  ip::udp::socket sock(io_context);
-  boost::system::error_code bs_error;
-  sock.open(ip::udp::v4(), bs_error);
-  if (bs_error) {
-    std::cerr << "Error opening the UDP socket.\n";
-    exit(EXIT_FAILURE);
-  }
-  */
-
-  // Configure the UDP interfact to broadcast.
-  //sock.set_option(ip::udp::socket::reuse_address(true));
-  //sock.set_option(boost::asio::socket_base::broadcast(true));
-
-  // Create the broadcast endpoint to send to.
-  //ip::udp::endpoint udp_bcast_endpoint(ip::address_v4::broadcast(), port);
-  //ip::udp::endpoint udp_bcast_endpoint(ip::address::from_string("127.0.0.1"), port);
-
   // Open the device
-  int fd = v4l2_open(DEVICE_NAME, O_RDWR | O_NONBLOCK, 0);
+  int fd = v4l2_open(device_name, O_RDWR | O_NONBLOCK, 0);
   if (fd < 0) {
-    printf("Failed to open device\n");
+    fprintf(stderr, "Failed to open device\n");
     exit(EXIT_FAILURE);
   }
 
@@ -170,8 +142,8 @@ int main(int argc, char **argv) {
   // device to see that sort of pixel formats are supported!
   v4l2_format fmt = {};
   fmt.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
-  fmt.fmt.pix.width = FRAME_WIDTH;
-  fmt.fmt.pix.height = FRAME_HEIGHT;
+  fmt.fmt.pix.width = width;
+  fmt.fmt.pix.height = height;
   fmt.fmt.pix.pixelformat = V4L2_PIX_FMT_H264;
   fmt.fmt.pix.field = V4L2_FIELD_INTERLACED;
   xioctl(fd, VIDIOC_S_FMT, &fmt);
@@ -306,7 +278,6 @@ int main(int argc, char **argv) {
 	size_t end = std::min(start + g_packet_size, nbytes);
 	size_t cnbytes = end - start;
 	sendto(udpfd, cbuf->data() + start, cnbytes, 0, (sockaddr*)&servaddr, sizeof(servaddr));
-	//sock.send_to(boost::asio::buffer(cbuf->data() + start, cnbytes), udp_bcast_endpoint);
       }
     };
     if (g_send_thread) {
