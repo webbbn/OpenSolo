@@ -13,8 +13,8 @@ VPATH = ../../ini ../../ini/cpp
 
 INCS = -I../../ini -I../../ini/cpp -I$(OECORE_TARGET_SYSROOT)/usr/include/libnl3
 
-CFLAGS += -Wall $(INCS)
-CXXFLAGS += -Wall $(INCS) $(PKGCONFIG)
+CFLAGS += -Wall -std=c99 $(INCS)
+CXXFLAGS += -Wall -std=c++11 $(INCS) $(PKGCONFIG)
 
 LIBS = -lv4l2
 

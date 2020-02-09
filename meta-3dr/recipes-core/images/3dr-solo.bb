@@ -58,6 +58,7 @@ IMAGE_INSTALL += " \
     rsync \
     compat-wireless-all \
     ffmpeg \
+    v4l-utils \
 "
 
 update_config_files() {

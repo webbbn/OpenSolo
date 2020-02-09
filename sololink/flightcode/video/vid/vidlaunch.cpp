@@ -491,7 +491,7 @@ int main(int argc, char *argv[])
     gst_element_set_state(pipeline, GST_STATE_PLAYING);
 
     /* Open the video fd for the enum_framesizes ioctl call */
-    vid_fd = open("/dev/video1", O_RDWR | O_NONBLOCK, 0);
+    vid_fd = open("/dev/video0", O_RDWR | O_NONBLOCK, 0);
     if (vid_fd < 0) {
         syslog(LOG_ERR, "Unable to open video device for ioctl");
         destroy_pipeline();
