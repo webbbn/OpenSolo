@@ -29,6 +29,7 @@ IMAGE_INSTALL += " \
     gst-plugins-good-video4linux2 \
     gst-plugins-bad-mpegtsmux \
     gst-plugins-bad-h264parse \
+    gst-plugins-bad-videoparsers \
     libudev \
     python-enum34 \
     python-subprocess \
