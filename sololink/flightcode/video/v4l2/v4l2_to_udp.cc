@@ -75,8 +75,11 @@ int find_device() {
     char fname[128];
     sprintf(fname, "/sys/class/video4linux/video%d/name", i);
     std::ifstream ifs(fname);
+    if (!ifs.good()) {
+      return -1;
+    }
     std::string line;
-    if (std::getline(ifs, line) && (line.find("360") != std::string::npos)) {
+    if (std::getline(ifs, line) && (line.find("Insta360") != std::string::npos)) {
 
       // Open the device and return the file descriptor
       sprintf(fname, "/dev/video%d", i);
