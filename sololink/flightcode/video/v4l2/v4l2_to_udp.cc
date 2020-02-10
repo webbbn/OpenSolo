@@ -173,7 +173,7 @@ int main(int argc, char **argv) {
   }
 
   // Write the video data to a random filename
-  char *logfname = "/log/videoxxxxxx";
+  char logfname[17] = "/log/videoxxxxxx";
   int logfd = mkstemp(logfname);
   if (logfd < 0) {
     fprintf(stderr, "Error creating video log file: %s", logfname);
@@ -316,7 +316,7 @@ int main(int argc, char **argv) {
     std::copy(reinterpret_cast<char*>(buffers[buf.index].start), reinterpret_cast<char*>(buffers[buf.index].start) +
 	      buf.bytesused, cbuf->data());
     size_t nbytes = buf.bytesused;
-    auto send_thread = [udpfd, cbuf, nbytes, &servaddr]() {
+    auto send_thread = [udpfd, cbuf, nbytes, &servaddr, logfd]() {
       for (size_t start = 0; start < nbytes; start += g_packet_size) {
 	size_t end = std::min(start + g_packet_size, nbytes);
 	size_t cnbytes = end - start;
