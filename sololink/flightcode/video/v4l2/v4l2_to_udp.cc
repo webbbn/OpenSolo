@@ -80,12 +80,7 @@ int find_device() {
 
       // Open the device and return the file descriptor
       sprintf(fname, "/dev/video%d", i);
-      int vid_fd = open(fname, O_RDWR | O_NONBLOCK, 0);
-      if (vid_fd < 0) {
-        syslog(LOG_ERR, "Unable to open video device for ioctl");
-        destroy_pipeline();
-        return -1;
-      }
+      return open(fname, O_RDWR | O_NONBLOCK, 0);
     }
   }
   return -1;
