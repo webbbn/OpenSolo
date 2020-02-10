@@ -59,6 +59,7 @@
 #include <fstream>
 #include <thread>
 #include <vector>
+#include <cstdio>
 
 constexpr size_t g_packet_size =1400;
 bool g_done;
@@ -169,6 +170,14 @@ int main(int argc, char **argv) {
   if (fd < 0) {
     fprintf(stderr, "Failed to open device\n");
     exit(EXIT_FAILURE);
+  }
+
+  // Write the video data to a random filename
+  char *logfname = "/log/videoxxxxxx";
+  int logfd = mkstemp(logfname);
+  if (logfd < 0) {
+    fprintf(stderr, "Error creating video log file: %s", logfname);
+    return EXIT_FAILURE;
   }
 
   // Specify the format of the data we want from the camera
@@ -313,6 +322,7 @@ int main(int argc, char **argv) {
 	size_t cnbytes = end - start;
 	sendto(udpfd, cbuf->data() + start, cnbytes, 0, (sockaddr*)&servaddr, sizeof(servaddr));
       }
+      write(logfd, cbuf->data(), nbytes);
     };
     if (g_send_thread) {
       g_send_thread->join();
@@ -343,4 +353,5 @@ int main(int argc, char **argv) {
   xioctl(fd, VIDIOC_REQBUFS, &request);
 
   v4l2_close(fd);
+  close(logfd);
 }
