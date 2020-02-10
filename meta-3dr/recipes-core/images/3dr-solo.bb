@@ -27,6 +27,7 @@ IMAGE_INSTALL += " \
     gst-plugins-good-udp \
     gst-plugins-good-rtp \
     gst-plugins-bad-mpegtsmux \
+    gst-plugins-bad-video4linux2 \
     libudev \
     python-enum34 \
     python-subprocess \
