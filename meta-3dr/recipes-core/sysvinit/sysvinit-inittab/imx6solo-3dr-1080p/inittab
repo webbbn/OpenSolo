@@ -46,6 +46,7 @@ API:4:respawn:run_shotmanager.sh
 RSSI:4:respawn:rssi_send
 LOCK:345:once:unlock
 CLK:2345:respawn:clock_sync
+USBV:4:respawn:run_usb_video.sh
 
 2:2345:respawn:/sbin/getty 115200 ttyGS0 vt100
 BNK1:3:once:`echo timer >> /sys/class/leds/user2/trigger`
