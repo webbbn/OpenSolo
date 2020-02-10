@@ -173,10 +173,10 @@ int main(int argc, char **argv) {
   }
 
   // Write the video data to a random filename
-  char logfname[17] = "/log/videoxxxxxx\0";
-  int logfd = mkstemp(logfname);
+  char logfname[22] = "/log/videoXXXXXX.h264\0";
+  int logfd = mkstemps(logfname);
   if (logfd < 0) {
-    fprintf(stderr, "Error creating video log file: %s", logfname);
+    fprintf(stderr, "Error creating video log file: %s\n", logfname);
     return EXIT_FAILURE;
   }
 
