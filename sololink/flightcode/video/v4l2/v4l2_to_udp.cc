@@ -84,6 +84,7 @@ int find_device() {
 
       // Open the device and return the file descriptor
       sprintf(fname, "/dev/video%d", i);
+      fprintf(stderr, "Trying %s\n", fname);
       return open(fname, O_RDWR | O_NONBLOCK, 0);
     }
   }
@@ -162,6 +163,7 @@ int main(int argc, char **argv) {
   if (device_name[0] != "/") {
     fd = find_device();
   } else{
+    fprintf(stderr, "Trying %s\n", device_name);
     fd = v4l2_open(device_name, O_RDWR | O_NONBLOCK, 0);
   }
   if (fd < 0) {
