@@ -9,6 +9,9 @@
 #include <stdint.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
+
+#include <ifstream>
+
 #include "80211.h"
 #include "INIReader.h"
 
@@ -353,6 +356,33 @@ int send_sprop(int fd)
     return -1;
 }
 
+/* Find the correct video device
+ */
+int find_device() {
+
+  /* Loop through the video devices looking for the hdmi decoder */
+  for (uint8_t i = 0; i < 10; ++i) {
+
+    /* Check for the string "Mcx" in the name of the device */
+    char fname[128];
+    sprintf(fname, "/sys/class/video4linux/video%d/name", i);
+    std::ifstream ifs(fname);
+    std::string line;
+    if (std::getline(ifs, line) && (line.find("Mcx") != std::string::npos)) {
+
+      // Open the device and return the file descriptor
+      sprintf(fname, "/dev/video%d", i);
+      int vid_fd = open(fname, O_RDWR | O_NONBLOCK, 0);
+      if (vid_fd < 0) {
+        syslog(LOG_ERR, "Unable to open video device for ioctl");
+        destroy_pipeline();
+        return -1;
+      }
+    }
+  }
+  return -1;
+}
+
 /* The main routine. Argumenets are only for gstreamer,
  * currently
  */
@@ -491,7 +521,7 @@ int main(int argc, char *argv[])
     gst_element_set_state(pipeline, GST_STATE_PLAYING);
 
     /* Open the video fd for the enum_framesizes ioctl call */
-    vid_fd = open("/dev/video0", O_RDWR | O_NONBLOCK, 0);
+    vid_fd = find_device();
     if (vid_fd < 0) {
         syslog(LOG_ERR, "Unable to open video device for ioctl");
         destroy_pipeline();

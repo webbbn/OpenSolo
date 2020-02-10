@@ -56,12 +56,40 @@
 #include <libv4l2.h>
 
 #include <iostream>
+#include <ifstream>
 #include <thread>
 #include <vector>
 
 constexpr size_t g_packet_size =1400;
 bool g_done;
 std::thread *g_send_thread = 0;
+
+/* Find the correct video device
+ */
+int find_device() {
+
+  /* Loop through the video devices looking for the hdmi decoder */
+  for (uint8_t i = 0; i < 10; ++i) {
+
+    /* Check for the string "Mcx" in the name of the device */
+    char fname[128];
+    sprintf(fname, "/sys/class/video4linux/video%d/name", i);
+    std::ifstream ifs(fname);
+    std::string line;
+    if (std::getline(ifs, line) && (line.find("360") != std::string::npos)) {
+
+      // Open the device and return the file descriptor
+      sprintf(fname, "/dev/video%d", i);
+      int vid_fd = open(fname, O_RDWR | O_NONBLOCK, 0);
+      if (vid_fd < 0) {
+        syslog(LOG_ERR, "Unable to open video device for ioctl");
+        destroy_pipeline();
+        return -1;
+      }
+    }
+  }
+  return -1;
+}
 
 // Wrapper around v4l2_ioctl for programming the video device,
 // that automatically retries the USB request if something
@@ -131,7 +159,12 @@ int main(int argc, char **argv) {
   servaddr.sin_port = htons(port);
 
   // Open the device
-  int fd = v4l2_open(device_name, O_RDWR | O_NONBLOCK, 0);
+  int fd;
+  if (device_name[0] != "/") {
+    fd = find_device();
+  } else{
+    fd = v4l2_open(device_name, O_RDWR | O_NONBLOCK, 0);
+  }
   if (fd < 0) {
     fprintf(stderr, "Failed to open device\n");
     exit(EXIT_FAILURE);
