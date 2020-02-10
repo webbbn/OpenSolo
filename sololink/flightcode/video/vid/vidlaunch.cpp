@@ -10,7 +10,7 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 
-#include <ifstream>
+#include <fstream>
 
 #include "80211.h"
 #include "INIReader.h"
