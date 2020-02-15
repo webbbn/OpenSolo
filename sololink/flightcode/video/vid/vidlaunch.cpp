@@ -416,8 +416,10 @@ int main(int argc, char *argv[])
 
     min_framerate = reader.GetInteger("video", "videoMinFR", DEFAULT_FRAMERATE);
     max_framerate = reader.GetInteger("video", "videoMaxFR", DEFAULT_FRAMERATE);
+    max_framerate = 30;
     min_bitrate = reader.GetInteger("video", "videoMinBR", DEFAULT_BITRATE);
     max_bitrate = reader.GetInteger("video", "videoMaxBR", DEFAULT_BITRATE);
+    max_bitrate = 6000000;
     framerate_step = reader.GetInteger("video", "videoFRStep", 5);
     bitrate_step = reader.GetInteger("video", "videoBRStep", 500000);
     var_stream_res = reader.GetBoolean("video", "varStreamRes", true);
