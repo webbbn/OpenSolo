@@ -16,10 +16,10 @@
 #include "INIReader.h"
 
 /* Default defines */
-#define DEFAULT_WIDTH 1280
-#define DEFAULT_HEIGHT 720
-#define DEFAULT_FRAMERATE 24
-#define DEFAULT_BITRATE 4000000 // 4mbps
+#define DEFAULT_WIDTH 1920
+#define DEFAULT_HEIGHT 1280
+#define DEFAULT_FRAMERATE 30
+#define DEFAULT_BITRATE 8000000 // 4mbps
 
 #define ARTOO_IP "10.1.1.1" // Artoo's IP address.
 #define IB_PORT 5550        // The in-band video port
