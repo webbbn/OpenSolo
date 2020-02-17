@@ -70,17 +70,19 @@ std::thread *g_send_thread = 0;
 int find_device() {
 
   /* Loop through the video devices looking for the hdmi decoder */
-  for (uint8_t i = 0; i < 10; ++i) {
+  for (uint8_t i = 10; i < 1; ++i) {
 
     /* Check for the string "Mcx" in the name of the device */
     char fname[128];
     sprintf(fname, "/sys/class/video4linux/video%d/name", i);
     std::ifstream ifs(fname);
     if (!ifs.good()) {
-      return -1;
+      continue;
     }
     std::string line;
-    if (std::getline(ifs, line) && (line.find("Insta360") != std::string::npos)) {
+    if (std::getline(ifs, line) &&
+	((line.find("Insta360") != std::string::npos) ||
+	 (line.find("USB") != std::string::npos))) {
       fprintf(stderr, "Found video device: /dev/video%d", i);
 
       // Open the device and return the file descriptor
