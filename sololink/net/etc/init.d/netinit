@@ -23,3 +23,8 @@ if [ -e /sys/class/net/wlan0 ]; then
 else
     echo "wlan0 does not exist"
 fi
+
+# Initialize an ethernet device if it's present
+if [ -e /sys/class/net/eth0 ]; then
+    ifup eth0
+fi
