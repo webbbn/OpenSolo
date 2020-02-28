@@ -25,8 +25,8 @@ SRC_URI += "\
 	file://0004-uart-no-dma.patch \
 	file://usb-video-config.patch \
 	file://enable-1080p-encode.patch \
-	file://usb-gadget-config.patch \
 "
+#	file://usb-gadget-config.patch \
 
 SRC_URI[rt-patch1.md5sum] = "77a28c8b20b01f280dcd860e606a6edd"
 SRC_URI[rt-patch1.sha256sum] = "ce219268f08eecccb39ff2b5be83657d53ca67cb1c6b81021494075197190351"
