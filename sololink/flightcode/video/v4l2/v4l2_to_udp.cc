@@ -70,15 +70,17 @@ std::thread *g_send_thread = 0;
 int find_device() {
 
   /* Loop through the video devices looking for the hdmi decoder */
-  for (uint8_t i = 10; i < 1; ++i) {
+  for (int8_t i = 10; i > 0; --i) {
 
-    /* Check for the string "Mcx" in the name of the device */
+    /* Check for the string in the name of the device */
     char fname[128];
     sprintf(fname, "/sys/class/video4linux/video%d/name", i);
+    fprintf(stderr, "Trying %s\n", fname);
     std::ifstream ifs(fname);
     if (!ifs.good()) {
       continue;
     }
+    fprintf(stderr, "Opened %s\n", fname);
     std::string line;
     if (std::getline(ifs, line) &&
 	((line.find("Insta360") != std::string::npos) ||
@@ -89,6 +91,8 @@ int find_device() {
       sprintf(fname, "/dev/video%d", i);
       fprintf(stderr, "Trying %s\n", fname);
       return open(fname, O_RDWR | O_NONBLOCK, 0);
+    } else {
+      fprintf(stderr, "Device not appropriate: /dev/video%d\n", i);
     }
   }
   return -1;
@@ -170,7 +174,7 @@ int main(int argc, char **argv) {
     fd = v4l2_open(device_name, O_RDWR | O_NONBLOCK, 0);
   }
   if (fd < 0) {
-    fprintf(stderr, "Failed to open device\n");
+    fprintf(stderr, "Failed to open device: %s\n", device_name);
     exit(EXIT_FAILURE);
   }
 
