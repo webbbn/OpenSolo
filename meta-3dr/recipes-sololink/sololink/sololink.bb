@@ -78,6 +78,7 @@ do_install () {
 
 	install -m 0755 ${S}/flightcode/video/v4l2/v4l2_to_udp ${D}${bindir}
 	install -m 0755 ${S}/flightcode/video/v4l2/run_usb_video.sh ${D}${bindir}
+	install -m 0755 ${S}/flightcode/video/v4l2/start_video.sh ${D}${bindir}
 	install -m 0755 ${S}/flightcode/video/hdmi/hdmiout ${D}${bindir}
 	install -m 0755 ${S}/flightcode/video/cleanLibs.sh ${D}${bindir}
 	ln -sf ../../usr/bin/cleanLibs.sh ${D}${sysconfdir}/rcS.d/S61cleanLibs
