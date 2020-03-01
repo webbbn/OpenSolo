@@ -1,5 +1,9 @@
 #!/bin/sh
 
+# Ensure the HDMI capture interface module is loaded
+modprobe mxc_v4l2_capture
+
+# Loop forever
 while true; do
 
   # First try to launch gstreamer on the port(s) to see if there's anything on the HDMI port
