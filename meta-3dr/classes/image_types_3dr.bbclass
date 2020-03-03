@@ -57,7 +57,7 @@ IMAGE_CMD_uboot.mxsboot-sdcard = "mxsboot sd ${DEPLOY_DIR_IMAGE}/u-boot-${MACHIN
 GOLDEN_VOLUME_ID ?= "GOLDEN"
 
 # Boot partition size [in KiB]
-BOOT_SPACE = "90000"
+BOOT_SPACE = "1048576"
 
 # Barebox environment size [in KiB]
 BAREBOX_ENV_SPACE ?= "512"
