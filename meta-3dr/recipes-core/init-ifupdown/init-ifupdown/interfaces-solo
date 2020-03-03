@@ -8,6 +8,14 @@ iface lo inet loopback
 allow-hotplub eth0
 iface eth0 inet dhcp
 
+# Gadget-mode ethernet over USB
+allow-hotplug usb0
+    iface usb0 inet static
+    address 192.168.10.2
+    netmask 255.255.255.252
+    network 192.168.10.0
+    broadcast 192.168.10.3
+
 # Wireless interfaces
 
 iface wlan0 inet dhcp
