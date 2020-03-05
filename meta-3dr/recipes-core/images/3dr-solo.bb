@@ -68,6 +68,7 @@ IMAGE_INSTALL += " \
     compat-wireless-all \
     ffmpeg \
     v4l-utils \
+    wifibroadcast_bridge \
 "
 
 update_config_files() {
