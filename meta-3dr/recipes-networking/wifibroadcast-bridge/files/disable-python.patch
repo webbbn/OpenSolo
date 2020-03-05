@@ -1,0 +1,82 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 96086b2..7d71c9b 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -1,4 +1,4 @@
+-cmake_minimum_required(VERSION 3.5)
++cmake_minimum_required(VERSION 2.8)
+ project(wifibroadcast_bridge)
+ 
+ # Set the version
+@@ -21,7 +21,7 @@ set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
+ 
+ # Define some default CFLAGS
+ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O3 -DNDEBUG")
+-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -O3 -DNDEBUG -DBOOST_LOG_DYN_LINK")
++set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -O3 -DNDEBUG -DBOOST_ALL_DYN_LINK")
+ 
+ # Add the local include directory to the include path
+ include_directories(${PROJECT_SOURCE_DIR}/include)
+@@ -37,6 +37,7 @@ find_package(Boost REQUIRED COMPONENTS
+   program_options
+   system
+   filesystem
++  log_setup
+   log)
+ include_directories(${Boost_INCLUDE_DIR})
+ 
+@@ -47,16 +48,16 @@ find_package(PCAP)
+ find_package(Threads)
+ 
+ # Find the python3 interpreter
+-if (${CMAKE_VERSION} VERSION_LESS "3.12.0")
+-  set(Python_ADDITIONAL_VERSIONS "3")
+-  set(PYTHON_EXECUTABLE "/usr/bin/python3")
+-  find_package(PythonInterp 3.0 REQUIRED)
+-  set(RELATIVE_PYTHON_DIR "${LibDir}/python${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR}/${PythonDistDir}/wifibroadcast")
+-else ()
+-  find_package(Python3 COMPONENTS Interpreter)
+-  set(RELATIVE_PYTHON_DIR "${LibDir}/python${Python3_VERSION_MAJOR}.${Python3_VERSION_MINOR}/${PythonDistDir}/wifibroadcast")
+-endif ()
+-set(PYTHON_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/${RELATIVE_PYTHON_DIR}")
++# if (${CMAKE_VERSION} VERSION_LESS "3.12.0")
++#   set(Python_ADDITIONAL_VERSIONS "3")
++#   set(PYTHON_EXECUTABLE "/usr/bin/python3")
++#   find_package(PythonInterp 3.0 REQUIRED)
++#   set(RELATIVE_PYTHON_DIR "${LibDir}/python${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR}/${PythonDistDir}/wifibroadcast")
++# else ()
++#   find_package(Python3 COMPONENTS Interpreter)
++#   set(RELATIVE_PYTHON_DIR "${LibDir}/python${Python3_VERSION_MAJOR}.${Python3_VERSION_MINOR}/${PythonDistDir}/wifibroadcast")
++# endif ()
++# set(PYTHON_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/${RELATIVE_PYTHON_DIR}")
+ 
+ # Add the radiotap source
+ include_directories(src/radiotap)
+@@ -89,11 +90,11 @@ add_executable(test_fec src/test_fec.cc)
+ target_link_libraries(test_fec ${Boost_LIBRARIES} wifibroadcast)
+ 
+ # Add rules to install the python executables
+-install(PROGRAMS python/wifi_config DESTINATION ${BinDir} COMPONENT applications)
++# install(PROGRAMS python/wifi_config DESTINATION ${BinDir} COMPONENT applications)
+ 
+ # Add rules to install the python files
+-install(DIRECTORY python/ DESTINATION ${RELATIVE_PYTHON_DIR} COMPONENT application
+-  FILES_MATCHING PATTERN "*.py")
++#install(DIRECTORY python/ DESTINATION ${RELATIVE_PYTHON_DIR} COMPONENT application
++#  FILES_MATCHING PATTERN "*.py")
+ 
+ # Add rules to install the configuration files
+ install(FILES conf/wfb_bridge DESTINATION etc/default COMPONENT configuration)
+diff --git a/src/raw_socket.cc b/src/raw_socket.cc
+index 347bf24..a033957 100644
+--- a/src/raw_socket.cc
++++ b/src/raw_socket.cc
+@@ -10,7 +10,7 @@
+ #include <sys/socket.h>
+ #include <netinet/ether.h>
+ #include <netpacket/packet.h>
+-#include <net/if.h>
++//#include <net/if.h>
+ #include <netdb.h>
+ #include <arpa/inet.h>
+ #include <sys/time.h>
