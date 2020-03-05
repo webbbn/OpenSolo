@@ -16,6 +16,8 @@ inherit pkgconfig cmake
 do_install() {
     install -d ${D}${bindir}
     install -m 0755 wfb_bridge ${D}${bindir}
+    install -d ${D}${libdir}
+    install -m 0755 libwifibroadcast.so ${D}${libdir}
     install -d ${D}${sysconfdir}/default
     install -m 0644 conf/wfb_bridge ${D}${sysconfdir}/default
 }
