@@ -20,4 +20,5 @@ do_install() {
     install -m 0755 libwifibroadcast.so ${D}${libdir}
     install -d ${D}${sysconfdir}/default
     install -m 0644 conf/wfb_bridge ${D}${sysconfdir}/default
+    install -m 0755 files/start_wfb_bridge.sh ${D}${bindir}
 }
