@@ -30,12 +30,6 @@ IMAGE_INSTALL += " \
     gst-plugins-bad-mpegtsmux \
     gst-plugins-bad-h264parse \
     gst-plugins-bad-videoparsersbad \
-    gstreamer1.0 \
-    gstreamer1.0-libav \
-    gstreamer1.0-plugins-bad \
-    gstreamer1.0-plugins-base \
-    gstreamer1.0-plugins-good \
-    gstreamer1.0-plugins-ugly \
     libudev \
     python-enum34 \
     python-subprocess \
