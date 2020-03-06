@@ -68,15 +68,26 @@ index 96086b2..7d71c9b 100644
  # Add rules to install the configuration files
  install(FILES conf/wfb_bridge DESTINATION etc/default COMPONENT configuration)
 diff --git a/src/raw_socket.cc b/src/raw_socket.cc
-index 347bf24..a033957 100644
+index 347bf24..15e6304 100644
 --- a/src/raw_socket.cc
 +++ b/src/raw_socket.cc
-@@ -10,7 +10,7 @@
+@@ -10,7 +10,6 @@
  #include <sys/socket.h>
  #include <netinet/ether.h>
  #include <netpacket/packet.h>
 -#include <net/if.h>
-+//#include <net/if.h>
  #include <netdb.h>
  #include <arpa/inet.h>
  #include <sys/time.h>
+@@ -203,9 +202,11 @@ bool RawSendSocket::add_device(const std::string &device, bool silent) {
+   memset(&mode, 0, sizeof(mode));
+   strncpy(mode.ifr_name, device.c_str(), device.length());
+   mode.ifr_name[device.length()] = 0;
++  /*
+   if ((ioctl(m_sock, SIOCGIWMODE, &mode) < 0) || (mode.u.mode != IW_MODE_MONITOR)) {
+     return false;
+   }
++  */
+ 
+   if (ioctl(m_sock, SIOCGIFINDEX, &ifr) < 0) {
+     if (!silent) {
