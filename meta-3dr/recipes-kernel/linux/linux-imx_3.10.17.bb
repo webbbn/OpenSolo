@@ -8,26 +8,7 @@ DEPENDS += "lzop-native bc-native"
 COMPATIBLE_MACHINE = "(mx6)"
 
 SRCREV = "sololink_v1.3.0-5"
-SRC_URI = "git://github.com/OpenSolo/imx6-linux/"
-
-SRC_URI += "\
-    https://www.kernel.org/pub/linux/kernel/projects/rt/3.10/older/patch-3.10.17-rt12.patch.bz2;name=rt-patch1 \
-	file://0001-fix-build.patch \
-	file://0002-fix-build-with-rt-enabled.patch \
-	file://0003-no-split-ptlocks.patch \
-	file://aufs3-base.patch \
-	file://aufs3-kbuild.patch \
-	file://aufs3-standalone.patch \
-	file://aufs3-mmap.patch \
-	file://aufs_type.h \
-	file://aufs \
-	file://0001-dts-changes-to-add-uart5.patch \
-	file://0004-uart-no-dma.patch \
-	file://usb-video-config.patch \
-	file://enable-1080p-encode.patch \
-	file://usb-gadget-config.patch \
-	file://ath9k.patch \
-"
+SRC_URI = "git@github.com:webbbn/imx6-linux.git"
 
 SRC_URI[rt-patch1.md5sum] = "77a28c8b20b01f280dcd860e606a6edd"
 SRC_URI[rt-patch1.sha256sum] = "ce219268f08eecccb39ff2b5be83657d53ca67cb1c6b81021494075197190351"
@@ -59,9 +40,6 @@ do_configure_prepend() {
 
     cp ${S}/arch/arm/configs/${fsl_defconfig} ${S}/.config
     cp ${S}/arch/arm/configs/${fsl_defconfig} ${S}/../defconfig
-
-    cp ${WORKDIR}/aufs_type.h ${S}/include/uapi/linux
-    cp -r ${WORKDIR}/aufs ${S}/fs/
 }
 
 # copy zImage to deploy directory
