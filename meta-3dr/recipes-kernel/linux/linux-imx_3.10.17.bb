@@ -8,7 +8,7 @@ DEPENDS += "lzop-native bc-native"
 COMPATIBLE_MACHINE = "(mx6)"
 
 SRCREV = "sololink_v1.3.0-5"
-SRC_URI = "git@github.com:webbbn/imx6-linux.git"
+SRC_URI = "git://github.com/webbbn/imx6-linux.git/"
 
 SRC_URI[rt-patch1.md5sum] = "77a28c8b20b01f280dcd860e606a6edd"
 SRC_URI[rt-patch1.sha256sum] = "ce219268f08eecccb39ff2b5be83657d53ca67cb1c6b81021494075197190351"
