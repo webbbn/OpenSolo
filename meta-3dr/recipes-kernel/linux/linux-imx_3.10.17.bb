@@ -7,7 +7,7 @@ DEPENDS += "lzop-native bc-native"
 
 COMPATIBLE_MACHINE = "(mx6)"
 
-SRCREV = "master"
+SRCREV = "${AUTOREV}"
 SRC_URI = "git://github.com/webbbn/imx6-linux.git/"
 
 SRC_URI[rt-patch1.md5sum] = "77a28c8b20b01f280dcd860e606a6edd"
