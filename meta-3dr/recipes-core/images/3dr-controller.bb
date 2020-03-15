@@ -57,6 +57,7 @@ IMAGE_INSTALL += " \
     rsync \
     stm32loader \
     compat-wireless-all \
+    wifibroadcast-bridge \
 "
 
 update_config_files() {
