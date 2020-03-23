@@ -63,6 +63,7 @@ IMAGE_INSTALL += " \
     ffmpeg \
     v4l-utils \
     wifibroadcast-bridge \
+    emacs \
 "
 
 update_config_files() {
