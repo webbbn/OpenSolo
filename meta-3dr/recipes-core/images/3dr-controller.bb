@@ -58,7 +58,6 @@ IMAGE_INSTALL += " \
     stm32loader \
     compat-wireless-all \
     wifibroadcast-bridge \
-    emacs \
 "
 
 update_config_files() {

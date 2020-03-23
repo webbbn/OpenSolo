@@ -63,7 +63,7 @@ IMAGE_INSTALL += " \
     ffmpeg \
     v4l-utils \
     wifibroadcast-bridge \
-    emacs \
+    mavlinkbridge \
 "
 
 update_config_files() {
