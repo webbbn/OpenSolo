@@ -130,7 +130,7 @@ checkLog() {
         setLedUpdating
         umount /dev/mmcblk0p4
         parted -s -- /dev/mmcblk0 rm 4
-        parted -s -- /dev/mmcblk0 unit MB mkpart primary ext2 300 -1
+        parted -s -- /dev/mmcblk0 unit MB mkpart primary ext2 1500 -1
         mkfs.ext3 /dev/mmcblk0p4 -L LOG -q
         setLedDone
         # this should not trigger an "update done" screen
@@ -322,8 +322,8 @@ else
             parted -s -- /dev/mmcblk0 rm 3
             parted -s -- /dev/mmcblk0 rm 4
 
-            parted -s -- /dev/mmcblk0 unit MB mkpart primary ext2 200 300
-            parted -s -- /dev/mmcblk0 unit MB mkpart primary ext2 300 -1
+	    parted -s -- /dev/mmcblk0 unit MB mkpart primary ext2 1000 1500
+	    parted -s -- /dev/mmcblk0 unit MB mkpart primary ext2 1500 -1
 
             mkfs.ext3 /dev/mmcblk0p3 -L RWFS -q
             mkfs.ext3 /dev/mmcblk0p4 -L LOG -q
@@ -355,8 +355,8 @@ else
         parted -s -- /dev/mmcblk0 rm 3
         parted -s -- /dev/mmcblk0 rm 4
 
-        parted -s -- /dev/mmcblk0 unit MB mkpart primary ext2 200 300
-        parted -s -- /dev/mmcblk0 unit MB mkpart primary ext2 300 -1
+	parted -s -- /dev/mmcblk0 unit MB mkpart primary ext2 1000 1500
+	parted -s -- /dev/mmcblk0 unit MB mkpart primary ext2 1500 -1
         
         mkfs.ext3 /dev/mmcblk0p3 -L RWFS -q
         mkfs.ext3 /dev/mmcblk0p4 -L LOG -q
