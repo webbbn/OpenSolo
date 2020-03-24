@@ -620,6 +620,7 @@ make_golden() {
     return 1
   fi
   umount /dev/mmcblk0p1 &> /dev/null
+  resizepart /dev/mmcblk0 1 1048576
   mkfs.vfat /dev/mmcblk0p1 -n GOLDEN &> /dev/null
   mkdir -p ${ROOT}/tmp/golden
   mount /dev/mmcblk0p1 ${ROOT}/tmp/golden
