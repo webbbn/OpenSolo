@@ -62,6 +62,7 @@ IMAGE_INSTALL += " \
     compat-wireless-all \
     ffmpeg \
     v4l-utils \
+    socat \
     wifibroadcast-bridge \
     mavlinkbridge \
 "

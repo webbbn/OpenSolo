@@ -1,2 +1,2 @@
 #!/bin/sh
-mavlinkbridge -s /dev/ttymcx4:5600 -u 127.0.0.1:14560
+mavlinkbridge -s /dev/ttymcx1:921600 -u 127.0.0.1:14550 -l 127.0.0.1:14551
